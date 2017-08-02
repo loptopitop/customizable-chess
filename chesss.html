@@ -6,6 +6,54 @@
         <h1> Customizable Chess </h1>
         <script>
 //Setting up the board
+debugger;
+              var whitePieces = {
+                pawn: {
+                  img: "Whitepawn.png"
+                },
+                horse: {
+                  img: "WhiteHorse.png"
+                },
+                queen:{
+                  img: "whitequeen.png"
+                },
+                king:{
+                  img: "Whiteking.png"
+                },
+                bishop:{
+                  img: "whitebishop.png"
+                },
+                rook:{
+                  img: "whiterook.png"
+                }
+              };
+
+
+              var blackPieces = {
+                pawn: {
+                  img: "BlackPawn.png"
+                },
+                horse: {
+                  img: "BlackHorse.png"
+                },
+                queen:{
+                  img: "Queen.png"
+                },
+                king:{
+                  img: "blackking.png"
+                },
+                bishop:{
+                  img: "bishop.png"
+                },
+                rook:{
+                  img: "BlackRook.png"
+                }
+              };
+
+              // placePiece('white', 'horse', 3, 2);
+              // placePiece('black', 'pawn', 5, 4);
+
+
               var textbox = document.createElement('input');
               document.body.appendChild(textbox);
 
@@ -45,206 +93,82 @@
                 return table2;
               }
 
-
               var board = makeBoard(8, 8);
               document.body.appendChild(board);
 
-              function placewhitePawn(x,y) {
-                var pawn = document.createElement('img')
-                pawn.src = "Whitepawn.png"
-                pawn.style.height = "100px";
-                pawn.style.width = "100px";
-                board.rows[x].cells[y].appendChild(pawn);
-                pawn.addEventListener ('click', function highlight(){
-                  pawn.style.background = "green";
+              var selectedPiece;
 
-                })
+              function selectPiece(piece) {
+                if(selectedPiece != undefined) {
+                  selectedPiece.style.background = "";
+                }
+                piece.style.background = "green";
+                selectedPiece = piece;
               }
 
-
-              placewhitePawn(1,0);
-              placewhitePawn(1,1);
-              placewhitePawn(1,2);
-              placewhitePawn(1,3);
-              placewhitePawn(1,4);
-              placewhitePawn(1,5);
-              placewhitePawn(1,6);
-              placewhitePawn(1,7);
-
-              function placewhiteHorse(x,y) {
-                var horse = document.createElement('img')
-                horse.src = "WhiteHorse.png"
-                horse.style.height = "100px";
-                horse.style.width = "100px";
-                board.rows[x].cells[y].appendChild(horse);
-                horse.addEventListener ('click', function highlight(){
-                  horse.style.background = "green";
-
-                })
-              }
-              placewhiteHorse(0,1);
-              placewhiteHorse(0,6);
-
-              function placewhiteKing(x,y) {
-                var king = document.createElement('img')
-                king.src = "Whiteking.png"
-                king.style.height = "100px";
-                king.style.width = "100px";
-                board.rows[x].cells[y].appendChild(king);
-                king.addEventListener ('click', function highlight(){
-                  king.style.background = "green";
-
-                })
-              }
-              placewhiteKing(0,3);
-
-              function placewhiteQueen(x,y) {
-                var queen = document.createElement('img')
-                queen.src = "whitequeen.png"
-                queen.style.height = "100px";
-                queen.style.width = "100px";
-                board.rows[x].cells[y].appendChild(queen);
-                queen.addEventListener ('click', function highlight(){
-                  queen.style.background = "green";
-
-                })
+              function placePiece(color, type, row, cell){
+                var piece = document.createElement('img');
+                if(color == 'white') {
+                  piece.src= whitePieces[type].img;
+                }
+                if(color == 'black') {
+                  piece.src = blackPieces[type].img;
+                }
+                piece.style.height = "100px";
+                piece.style.width = "100px";
+                board.rows[row].cells[cell].appendChild(piece);
+                piece.addEventListener('click', function highlight(){
+                  selectPiece(piece);
+                });
+                return piece
               }
 
-              placewhiteQueen(0,4);
+  //white pieces
+              placePiece('white', 'pawn', 1, 0);
+              placePiece('white', 'pawn', 1, 1);
+              placePiece('white', 'pawn', 1, 2);
+              placePiece('white', 'pawn', 1, 3);
+              placePiece('white', 'pawn', 1, 4);
+              placePiece('white', 'pawn', 1, 5);
+              placePiece('white', 'pawn', 1, 6);
+              placePiece('white', 'pawn', 1, 7);
 
-              function placewhiteBishop(x,y) {
-                var bishop = document.createElement('img')
-                bishop.src = "whitebishop.png"
-                bishop.style.height = "100px";
-                bishop.style.width = "100px";
-                board.rows[x].cells[y].appendChild(bishop);
-                bishop.addEventListener ('click', function highlight(){
-                  bishop.style.background = "green";
+              placePiece('white', 'horse', 0, 1);
+              placePiece('white', 'horse', 0, 6);
 
-                })
-              }
-              placewhiteBishop(0,2);
-              placewhiteBishop(0,5);
+              placePiece('white', 'bishop', 0, 2);
+              placePiece('white', 'bishop', 0, 5);
 
-              function placewhiterook(x,y) {
-                var rook = document.createElement('img')
-                rook.src = "whiterook.png"
-                rook.style.height = "100px";
-                rook.style.width = "100px";
-                board.rows[x].cells[y].appendChild(rook);
-                rook.addEventListener ('click', function highlight(){
-                  rook.style.background = "green";
+              placePiece('white', 'rook', 0, 0)
+              placePiece('white', 'rook', 0, 7)
 
-                })
-              }
-              placewhiterook(0,0);
-              placewhiterook(0,7);
+              placePiece('white', 'king', 0, 3);
 
+              placePiece('white', 'queen', 0, 4);
 
-              function placeblackPawn(x,y) {
-                var pawn = document.createElement('img')
-                pawn.src = "BlackPawn.png"
-                pawn.style.height = "100px";
-                pawn.style.width = "100px";
-                board.rows[x].cells[y].appendChild(pawn);
-                pawn.addEventListener ('click', function highlightpwn(){
-                  pawn.style.background = "green";
+// black pieces
 
-                })
-              }
+              placePiece('black', 'pawn', 6, 0);
+              placePiece('black', 'pawn', 6, 1);
+              placePiece('black', 'pawn', 6, 2);
+              placePiece('black', 'pawn', 6, 3);
+              placePiece('black', 'pawn', 6, 4);
+              placePiece('black', 'pawn', 6, 5);
+              placePiece('black', 'pawn', 6, 6);
+              placePiece('black', 'pawn', 6, 7);
 
-              placeblackPawn(6,0);
-              placeblackPawn(6,1);
-              placeblackPawn(6,2);
-              placeblackPawn(6,3);
-              placeblackPawn(6,4);
-              placeblackPawn(6,5);
-              placeblackPawn(6,6);
-              placeblackPawn(6,7);
+              placePiece('black', 'horse', 7, 1);
+              placePiece('black', 'horse', 7, 6);
 
-              function placeblackHorse(x,y) {
-                var horse = document.createElement('img')
-                horse.src = "BlackHorse.png"
-                horse.style.height = "100px";
-                horse.style.width = "100px";
-                board.rows[x].cells[y].appendChild(horse);
-                horse.addEventListener ('click', function makecolourofhrschange(){
-                  horse.style.background = "green";
-                })
-              }
+              placePiece('black', 'bishop', 7, 2);
+              placePiece('black', 'bishop', 7, 5);
 
-              placeblackHorse(7,1);
-              placeblackHorse(7,6);
+              placePiece('black', 'rook', 7, 0)
+              placePiece('black', 'rook', 7, 7)
 
-              function placeblackKing(x,y) {
-                var king = document.createElement('img')
-                king.src = "blackking.png"
-                king.style.height = "100px";
-                king.style.width = "100px";
-                board.rows[x].cells[y].appendChild(king);
-                king.addEventListener ('click', function makecolourofhrschange(){
-                  king.style.background = "green";
+              placePiece('black', 'king', 7, 4);
 
-                })
-              }
-
-              placeblackKing(7,3);
-
-              function placeblackqueen(x,y) {
-                var Queen = document.createElement('img')
-                Queen.src = "Queen.png"
-                Queen.style.height = "100px";
-                Queen.style.width = "100px";
-                board.rows[x].cells[y].appendChild(Queen);
-                Queen.addEventListener ('click', function makecolourofhrschange(){
-                  Queen.style.background = "green";
-
-                })
-              }
-
-              placeblackqueen(7,4);
-
-              function placeblackbishop(x,y) {
-                var bishop = document.createElement('img')
-                bishop.src = "bishop.png"
-                bishop.style.height = "100px";
-                bishop.style.width = "100px";
-                board.rows[x].cells[y].appendChild(bishop);
-                bishop.addEventListener ('click', function makecolourofhrschange(){
-                  bishop.style.background = "green";
-
-                })
-              }
-
-              placeblackbishop(7,2);
-              placeblackbishop(7,5);
-
-              function placeblackrook(x,y) {
-                var rook = document.createElement('img')
-                rook.src = "BlackRook.png"
-                rook.style.height = "100px";
-                rook.style.width = "100px";
-                board.rows[x].cells[y].appendChild(rook);
-                rook.addEventListener ('click', function makecolourofhrschange(){
-                  rook.style.background = "green";
-
-                })
-              }
-              placeblackrook(7,0);
-              placeblackrook(7,7);
-
-
-        /*moving pieces
-
-        I need to only be able to higlight one piece.
-        So i can isolate it, and change its coordinates.
-
-        I wish to be able to select only one piece, then have an event listener
-        to every cell, which if a piece is highlighted and player afterwards clicks on a cell,
-        The highlighted piece will move to the next cell. replacing a piece if already on it
-        or moving into the empty cell
-        */
-
+              placePiece('black', 'queen', 7, 3);
 
 
         </script>
