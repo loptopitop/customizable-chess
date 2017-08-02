@@ -52,7 +52,7 @@ debugger;
 
               // placePiece('white', 'horse', 3, 2);
               // placePiece('black', 'pawn', 5, 4);
-
+              var selectedPiece;
 
               var textbox = document.createElement('input');
               document.body.appendChild(textbox);
@@ -66,7 +66,6 @@ debugger;
                 table2.style.borderStyle = "solid";
                 table2.style.borderColor = "green";
 
-
                 var row, cell;
                 for(var i = 0; i < numRows; i = i + 1){
                   row = table2.insertRow();
@@ -75,8 +74,14 @@ debugger;
                     cell.style.borderWidth = "3px";
                     cell.style.borderStyle = "solid";
                     cell.style.borderColor = "green";
-                    cell.style.width = "100px"
-                    cell.style.height = "100px"
+                    cell.style.width = "100px";
+                    cell.style.height = "100px";
+                    cell.addEventListener('click', function movepiece() {
+                      if(selectedPiece != undefined) {
+                        cell.appendChild(selectedPiece)
+                       }
+
+                    })
                     var halfcells = (j / 2);
                     var halfrows = (i / 2);
 
@@ -169,6 +174,8 @@ debugger;
               placePiece('black', 'king', 7, 4);
 
               placePiece('black', 'queen', 7, 3);
+
+
 
 
         </script>
