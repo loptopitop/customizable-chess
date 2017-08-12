@@ -5,11 +5,15 @@
     <body>
         <h1> Customizable Chess </h1>
         <script>
-//Setting up the board
-debugger;
+//Setting up the boar
+
+              // whitePieces.pawn.pattern();
               var whitePieces = {
                 pawn: {
-                  img: "Whitepawn.png"
+                  img: "Whitepawn.png",
+                  canMoveTo: function(current, desired) { // 2 vectors
+
+                  }
                 },
                 horse: {
                   img: "WhiteHorse.png"
@@ -50,12 +54,14 @@ debugger;
                 }
               };
 
+              var turn = "white";
+
               // placePiece('white', 'horse', 3, 2);
               // placePiece('black', 'pawn', 5, 4);
-              var selectedPiece;
 
               var textbox = document.createElement('input');
               document.body.appendChild(textbox);
+              textbox.value = "white";
 
               document.body.style.background = "lightblue"
 
@@ -66,11 +72,10 @@ debugger;
                 table2.style.borderStyle = "solid";
                 table2.style.borderColor = "green";
 
-                var row, cell;
                 for(var i = 0; i < numRows; i = i + 1){
                   row = table2.insertRow();
                   for(var j = 0; j < numCells; j++){
-                    cell = row.insertCell();
+                    let cell = row.insertCell();
                     cell.style.borderWidth = "3px";
                     cell.style.borderStyle = "solid";
                     cell.style.borderColor = "green";
@@ -78,9 +83,9 @@ debugger;
                     cell.style.height = "100px";
                     cell.addEventListener('click', function movepiece() {
                       if(selectedPiece != undefined) {
-                        cell.appendChild(selectedPiece)
-                       }
-
+                        cell.appendChild(selectedPiece);
+                        switchturns();
+                      }
                     })
                     var halfcells = (j / 2);
                     var halfrows = (i / 2);
@@ -107,8 +112,10 @@ debugger;
                 if(selectedPiece != undefined) {
                   selectedPiece.style.background = "";
                 }
-                piece.style.background = "green";
-                selectedPiece = piece;
+                if(turn == piece.color){
+                  piece.style.background = "green";
+                  selectedPiece = piece;
+                }
               }
 
               function placePiece(color, type, row, cell){
@@ -119,14 +126,25 @@ debugger;
                 if(color == 'black') {
                   piece.src = blackPieces[type].img;
                 }
+                piece.color = color;
                 piece.style.height = "100px";
                 piece.style.width = "100px";
                 board.rows[row].cells[cell].appendChild(piece);
                 piece.addEventListener('click', function highlight(){
                   selectPiece(piece);
+                  event.stopPropagation();
                 });
                 return piece
               }
+
+              function switchturns() {
+                selectedPiece.style.background = "";
+                selectedPiece = undefined;
+                if (turn == 'white') { turn = 'black'; }
+                else { turn = 'white'; }
+                textbox.value = turn;
+              }
+
 
   //white pieces
               placePiece('white', 'pawn', 1, 0);
@@ -174,8 +192,6 @@ debugger;
               placePiece('black', 'king', 7, 4);
 
               placePiece('black', 'queen', 7, 3);
-
-
 
 
         </script>
