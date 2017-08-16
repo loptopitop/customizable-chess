@@ -23,12 +23,15 @@
                 },
                 king:{
                   img: "Whiteking.png"
+
                 },
                 bishop:{
                   img: "whitebishop.png"
+
                 },
                 rook:{
                   img: "whiterook.png"
+
                 }
               };
 
@@ -36,21 +39,28 @@
               var blackPieces = {
                 pawn: {
                   img: "BlackPawn.png"
+
+
                 },
                 horse: {
                   img: "BlackHorse.png"
+
                 },
                 queen:{
                   img: "Queen.png"
+
                 },
                 king:{
                   img: "blackking.png"
+
                 },
                 bishop:{
                   img: "bishop.png"
+
                 },
                 rook:{
                   img: "BlackRook.png"
+
                 }
               };
 
@@ -74,6 +84,7 @@
 
                 for(var i = 0; i < numRows; i = i + 1){
                   row = table2.insertRow();
+
                   for(var j = 0; j < numCells; j++){
                     let cell = row.insertCell();
                     cell.style.borderWidth = "3px";
@@ -81,12 +92,12 @@
                     cell.style.borderColor = "green";
                     cell.style.width = "100px";
                     cell.style.height = "100px";
-                    cell.addEventListener('click', function movepiece() {
-                      if(selectedPiece != undefined) {
-                        cell.appendChild(selectedPiece);
-                        switchturns();
-                      }
+                    cell.addEventListener('click', function() {
+                      moveSelectedPiece(cell);
                     })
+                    cell.coordinates = {};
+                    cell.coordinates.row = i;
+                    cell.coordinates.cell = j;
                     var halfcells = (j / 2);
                     var halfrows = (i / 2);
 
@@ -106,15 +117,38 @@
               var board = makeBoard(8, 8);
               document.body.appendChild(board);
 
+
+
               var selectedPiece;
 
-              function selectPiece(piece) {
-                if(selectedPiece != undefined) {
-                  selectedPiece.style.background = "";
+              function clickCell(cellClicked){
+                if( cellClicked.children.length > 0 ){
+                  var pieceInCell = cellClicked.children[0];
+                  if ( selectedPiece != undefined ) {
+                    if ( pieceInCell.color == turn ) {
+                      return;
+                    }
+
+                  }
                 }
+              }
+
+              function moveSelectedPiece(cell){
+                if(selectedPiece != undefined) {
+                  cell.appendChild(selectedPiece);
+                  selectedPiece._row = cell.coordinates.row;
+                  selectedPiece._cell = cell.coordinates.cell;
+                  switchturns();
+                }
+              }
+
+              function selectPiece(piece) {
+                unselect();
                 if(turn == piece.color){
                   piece.style.background = "green";
                   selectedPiece = piece;
+                } else {
+
                 }
               }
 
@@ -122,24 +156,40 @@
                 var piece = document.createElement('img');
                 if(color == 'white') {
                   piece.src= whitePieces[type].img;
+
                 }
                 if(color == 'black') {
                   piece.src = blackPieces[type].img;
                 }
                 piece.color = color;
+                piece._cell = cell;
+                piece._row = row;
                 piece.style.height = "100px";
                 piece.style.width = "100px";
                 board.rows[row].cells[cell].appendChild(piece);
                 piece.addEventListener('click', function highlight(){
-                  selectPiece(piece);
+                  var cell = board.rows[piece._row].cells[piece._cell];
+                  if(selectedPiece != undefined && selectedPiece.color != piece.color){
+                    piece.remove();
+                    moveSelectedPiece(cell);
+                  } else {
+                    selectPiece(piece);
+                  }
                   event.stopPropagation();
                 });
                 return piece
               }
 
+
+              function unselect(){
+                if(selectedPiece != undefined) {
+                  selectedPiece.style.background = "";
+                  selectedPiece = undefined;
+                }
+              }
+
               function switchturns() {
-                selectedPiece.style.background = "";
-                selectedPiece = undefined;
+                unselect();
                 if (turn == 'white') { turn = 'black'; }
                 else { turn = 'white'; }
                 textbox.value = turn;
