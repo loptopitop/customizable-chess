@@ -15,10 +15,10 @@ function selectPiece(piece) {
 function placeNewPiece(color, type, row, cell){
   var piece = document.createElement('img');
   if(color == 'white') {
-    piece.src = whitePieces[type].img;
+    piece.src = 'images/' + whitePieces[type].img;
   }
   if(color == 'black') {
-    piece.src = blackPieces[type].img;
+    piece.src = 'images/' + blackPieces[type].img;
   }
   piece._data = {};
   piece._data.color = color;
