@@ -46,8 +46,8 @@ function switchturns() {
 
 function handleCellClick(cellClicked){
   if(cellClicked.children.length > 0) { // does it have children (aka does it have a piece in it)
-    var pieceClicked = cellClicked.children[0]; // we know that it will only have 1 child max
-    if(pieceClicked._data.color == turnColor) { // we selected our own piece, therefore we select it
+    var pieceClicked = cellClicked.children[0]; // (we know that it will only have 1 child max) 
+    if(pieceClicked._data.color == turnColor) { // we clicked our own piece, therefore we select it
       selectPiece(pieceClicked);
     } else { // it is an enemy piece
       if(selectedPiece != undefined) { // we have a selected piece, therefore we kill
