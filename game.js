@@ -47,38 +47,49 @@ function switchturns() {
 
 function handleCellClick(cellClicked){
   if(cellClicked.children.length > 0) { // does it have children (aka does it have a piece in it)
-    var pieceClicked = cellClicked.children[0]; // (we know that it will only have 1 child max)
-    if(pieceClicked._data.color == turnColor) { // we clicked our own piece, therefore we select it
-      selectPiece(pieceClicked);
-    }};
+   var pieceClicked = cellClicked.children[0]; // (we know that it will only have 1 child max)
+   if(pieceClicked._data.color == turnColor) { // we clicked our own piece, therefore we select it
+     selectPiece(pieceClicked);
+   } else { // it is an enemy piece
+     if(selectedPiece != undefined) { // we have a selected piece, therefore we kill
+       pieceClicked.remove();
+       moveSelectedPiece(cellClicked);
+       switchturns();
+     } else { // we clicked an enemy but we dont have a selected piece, therefore nothing..
 
-  if(selectedPiece.type == "pawn"){
+     }
+   }
+ } else { // it does not have children
+   if(selectedPiece != undefined) { // we have a selected piece, therefore we wanna move the piece
+     moveSelectedPiece(cellClicked);
+     switchturns();
+   } else { // we dont have a selected piece, therefore nothing..
 
-
-   if(pieceClicked._data.color != turnColor && selectedPiece != undefined) {
-     pawnpotentialkill();
-   };
-   pawnpotential();
- };
+   }
+ }
+}
 
 function pawnpotentialkill(){
   if(pieceClicked != undefined && selectedPiece != undefined){
-        if(cellClicked._data.cell == selectedPiece._data.cell + 1){
-          pieceClicked.remove();
-          moveSelectedPiece(cellClicked);
-          switchturns();
-        }
-        if(cellClicked._data.cell == selectedPiece._data.cell - 1){
-              pieceClicked.remove();
-              moveSelectedPiece(cellClicked);
-              switchturns();
-}};
+    if(cellClicked._data.cell == selectedPiece._data.cell + 1){
+      pieceClicked.remove();
+      moveSelectedPiece(cellClicked);
+      switchturns();
+    }
+    if(cellClicked._data.cell == selectedPiece._data.cell - 1){
+      pieceClicked.remove();
+      moveSelectedPiece(cellClicked);
+      switchturns();
+    }
+  }
+}
 
 function pawnpotential(){
-    // simply moving forward
+  // simply moving forward
   if(pieceClicked == undefined){
-
-   if(cellClicked._data.row == (selectedPiece._data.row + 1)){
-    moveSelectedPiece(cellClicked);
-    switchturns();
-  }};
+    if(cellClicked._data.row == (selectedPiece._data.row + 1)){
+      moveSelectedPiece(cellClicked);
+      switchturns();
+    }
+  }
+}
