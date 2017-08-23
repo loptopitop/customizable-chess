@@ -50,46 +50,89 @@ function handleCellClick(cellClicked){
    var pieceClicked = cellClicked.children[0]; // (we know that it will only have 1 child max)
    if(pieceClicked._data.color == turnColor) { // we clicked our own piece, therefore we select it
      selectPiece(pieceClicked);
-   } else { // it is an enemy piece
-     if(selectedPiece != undefined) { // we have a selected piece, therefore we kill
-       pieceClicked.remove();
-       moveSelectedPiece(cellClicked);
-       switchturns();
-     } else { // we clicked an enemy but we dont have a selected piece, therefore nothing..
-
-     }
    }
- } else { // it does not have children
-   if(selectedPiece != undefined) { // we have a selected piece, therefore we wanna move the piece
-     moveSelectedPiece(cellClicked);
-     switchturns();
-   } else { // we dont have a selected piece, therefore nothing..
-
-   }
- }
-}
-
-function pawnpotentialkill(){
-  if(pieceClicked != undefined && selectedPiece != undefined){
-    if(cellClicked._data.cell == selectedPiece._data.cell + 1){
-      pieceClicked.remove();
-      moveSelectedPiece(cellClicked);
-      switchturns();
+   if(selectedPiece != undefined && selectedPiece._data.type == "pawn") { // we have a selected piece, therefore we kill
+         pawnpotentialkill(pieceClicked, cellClicked);
+      }
     }
-    if(cellClicked._data.cell == selectedPiece._data.cell - 1){
-      pieceClicked.remove();
-      moveSelectedPiece(cellClicked);
-      switchturns();
+
+  else if (pieceClicked == undefined) {
+      pawnpotential(cellClicked);
+    }
+  }
+
+
+
+function pawnpotentialkill(pieceClicked,  cellClicked){
+  if(pieceClicked != undefined && selectedPiece != undefined){
+    if (selectedPiece._data.color == "white"){
+      if(cellClicked._data.cell == selectedPiece._data.cell + 1 && cellClicked._data.row == selectedPiece._data.row + 1 ){
+        pieceClicked.remove();
+        moveSelectedPiece(cellClicked);
+        switchturns();
+      }
+    if(cellClicked._data.cell == selectedPiece._data.cell - 1 && cellClicked._data.row == selectedPiece._data.row + 1){
+        pieceClicked.remove();
+        moveSelectedPiece(cellClicked);
+        switchturns();
+      }
+  }
+    if (selectedPiece._data.color == "black"){
+      if(cellClicked._data.cell == selectedPiece._data.cell - 1 && cellClicked._data.row == selectedPiece._data.row - 1){
+         pieceClicked.remove();
+         moveSelectedPiece(cellClicked);
+         switchturns();
+       }
+      if(cellClicked._data.cell == selectedPiece._data.cell + 1 && cellClicked._data.row == selectedPiece._data.row - 1){
+         pieceClicked.remove();
+         moveSelectedPiece(cellClicked);
+         switchturns();
+       }
     }
   }
 }
 
-function pawnpotential(){
+function pawnpotential(cellClicked){
+  if (selectedPiece._data.cell == cellClicked._data.cell) {
+
+
   // simply moving forward
-  if(pieceClicked == undefined){
-    if(cellClicked._data.row == (selectedPiece._data.row + 1)){
-      moveSelectedPiece(cellClicked);
-      switchturns();
-    }
+      if (selectedPiece._data.color == "white"){
+        if(selectedPiece._data.row == 1) {
+          if(cellClicked._data.row == (selectedPiece._data.row + 2)){
+            moveSelectedPiece(cellClicked);
+            switchturns();
+          }
+          if(cellClicked._data.row == (selectedPiece._data.row + 1)){
+            moveSelectedPiece(cellClicked);
+            switchturns();
+          }
+        }
+        else {
+          if(cellClicked._data.row == (selectedPiece._data.row + 1)){
+            moveSelectedPiece(cellClicked);
+            switchturns();
+          }
+        }
+      }
+
+      if (selectedPiece._data.color == "black") {
+        if(selectedPiece._data.row == 6) {
+          if(cellClicked._data.row == (selectedPiece._data.row - 2)){
+            moveSelectedPiece(cellClicked);
+            switchturns();
+          }
+          if(cellClicked._data.row == (selectedPiece._data.row - 1)){
+            moveSelectedPiece(cellClicked);
+            switchturns();
+          }
+        }
+        else {
+          if(cellClicked._data.row == (selectedPiece._data.row -1)){
+            moveSelectedPiece(cellClicked);
+            switchturns();
+          }
+        }
+      }
   }
 }
