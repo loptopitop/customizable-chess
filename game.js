@@ -47,92 +47,32 @@ function switchturns() {
 
 function handleCellClick(cellClicked){
   if(cellClicked.children.length > 0) { // does it have children (aka does it have a piece in it)
-   var pieceClicked = cellClicked.children[0]; // (we know that it will only have 1 child max)
+   var pieceClicked = cellClicked.children[0];
    if(pieceClicked._data.color == turnColor) { // we clicked our own piece, therefore we select it
-     selectPiece(pieceClicked);
+      selectPiece(pieceClicked);
+    }
+  }
+  if (selectedPiece._data.type == "horse"){
+     horsepotential(cellClicked);
    }
-   if(selectedPiece != undefined && selectedPiece._data.type == "pawn") { // we have a selected piece, therefore we kill
-         pawnpotentialkill(pieceClicked, cellClicked);
-      }
-    }
-
-  else if (pieceClicked == undefined) {
-      pawnpotential(cellClicked);
-    }
+ if (selectedPiece._data.type == "bishop") {
+   bishoppotential(cellClicked);
+   }
+  if (selectedPiece._data.type == "rook") {
+    rookpotential(cellClicked);
   }
-
-
-
-function pawnpotentialkill(pieceClicked,  cellClicked){
-  if(pieceClicked != undefined && selectedPiece != undefined){
-    if (selectedPiece._data.color == "white"){
-      if(cellClicked._data.cell == selectedPiece._data.cell + 1 && cellClicked._data.row == selectedPiece._data.row + 1 ){
-        pieceClicked.remove();
-        moveSelectedPiece(cellClicked);
-        switchturns();
-      }
-    if(cellClicked._data.cell == selectedPiece._data.cell - 1 && cellClicked._data.row == selectedPiece._data.row + 1){
-        pieceClicked.remove();
-        moveSelectedPiece(cellClicked);
-        switchturns();
-      }
+  if (selectedPiece._data.type == "queen") {
+    queenpotential(cellClicked);
   }
-    if (selectedPiece._data.color == "black"){
-      if(cellClicked._data.cell == selectedPiece._data.cell - 1 && cellClicked._data.row == selectedPiece._data.row - 1){
-         pieceClicked.remove();
-         moveSelectedPiece(cellClicked);
-         switchturns();
-       }
-      if(cellClicked._data.cell == selectedPiece._data.cell + 1 && cellClicked._data.row == selectedPiece._data.row - 1){
-         pieceClicked.remove();
-         moveSelectedPiece(cellClicked);
-         switchturns();
-       }
-    }
+  if (selectedPiece._data.type == "king") {
+    kingpotential(cellClicked);
   }
-}
-
-function pawnpotential(cellClicked){
-  if (selectedPiece._data.cell == cellClicked._data.cell) {
-
-
-  // simply moving forward
-      if (selectedPiece._data.color == "white"){
-        if(selectedPiece._data.row == 1) {
-          if(cellClicked._data.row == (selectedPiece._data.row + 2)){
-            moveSelectedPiece(cellClicked);
-            switchturns();
-          }
-          if(cellClicked._data.row == (selectedPiece._data.row + 1)){
-            moveSelectedPiece(cellClicked);
-            switchturns();
-          }
-        }
-        else {
-          if(cellClicked._data.row == (selectedPiece._data.row + 1)){
-            moveSelectedPiece(cellClicked);
-            switchturns();
-          }
-        }
+  if (selectedPiece._data.type == "pawn") {
+      if (pieceClicked != undefined && selectedPiece != undefined){
+        pawnpotentialkill(cellClicked);
       }
-
-      if (selectedPiece._data.color == "black") {
-        if(selectedPiece._data.row == 6) {
-          if(cellClicked._data.row == (selectedPiece._data.row - 2)){
-            moveSelectedPiece(cellClicked);
-            switchturns();
-          }
-          if(cellClicked._data.row == (selectedPiece._data.row - 1)){
-            moveSelectedPiece(cellClicked);
-            switchturns();
-          }
-        }
-        else {
-          if(cellClicked._data.row == (selectedPiece._data.row -1)){
-            moveSelectedPiece(cellClicked);
-            switchturns();
-          }
+      else {
+        pawnpotential(cellClicked);
         }
       }
   }
-}
