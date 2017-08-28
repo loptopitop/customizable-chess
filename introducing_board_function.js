@@ -1,3 +1,5 @@
+var cellClicked
+
 function makeBoard(numRows, numCells, cellClickHandler){
   var table2 = document.createElement("table");
   table2.style.background = "lightbrown";
@@ -31,9 +33,20 @@ function makeBoard(numRows, numCells, cellClickHandler){
 
       // cell is ready
       cell.addEventListener('click', function(){
+        cellClicked = cell
         cellClickHandler(cell);
       });
     }
   }
   return table2;
+}
+
+function handleCellClick(cellClicked){
+  if(cellClicked.children.length > 0) { // does it have children (aka does it have a piece in it)
+   var pieceClicked = cellClicked.children[0];
+   if(pieceClicked._data.color == turnColor) { // we clicked our own piece, therefore we select it
+      selectPiece(pieceClicked);
+    }
+    selectedPiece._data.type.canMoveTo;
+  }
 }

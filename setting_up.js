@@ -1,18 +1,38 @@
 // general setup
 document.body.style.background = "lightblue";
 
+var turnColor = "white";
+var selectedPiece;
+
 // setup textbox
 var textbox = document.createElement('input');
 document.body.appendChild(textbox);
-textbox.value = "white";
+textbox.value = turnColor;
 
 // setup board
 var board = makeBoard(8, 8, handleCellClick);
 document.body.appendChild(board);
 
-// setup game state
-var turnColor = "white";
-var selectedPiece;
+
+
+function placeNewPiece(color, type, row, cell){
+  var piece = document.createElement('img');
+  if(color == 'white') {
+    piece.src = whitePieces[type].img;
+  }
+  if(color == 'black') {
+    piece.src = blackPieces[type].img;
+  }
+  piece._data = {};
+  piece._data.color = color;
+  piece._data.cell = cell;
+  piece._data.row = row;
+  piece._data.type = type;
+  piece.style.height = "100px";
+  piece.style.width = "100px";
+  board.rows[row].cells[cell].appendChild(piece);
+  return piece;
+}
 
 // setup pieces
 placeNewPiece('white', 'pawn', 1, 0);
