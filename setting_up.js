@@ -16,18 +16,21 @@ document.body.appendChild(board);
 
 
 function placeNewPiece(color, type, row, cell){
+  if(type != 'bishop') return false;
+  
   var piece = document.createElement('img');
   if(color == 'white') {
-    piece.src = whitePieces[type].img;
+    piece.src = 'images/' + piecesConfig[type].img.white;
   }
   if(color == 'black') {
-    piece.src = blackPieces[type].img;
+    piece.src = 'images/' + piecesConfig[type].img.black;
   }
   piece._data = {};
   piece._data.color = color;
   piece._data.cell = cell;
   piece._data.row = row;
   piece._data.type = type;
+  piece._data.pattern = piecesConfig[type].pattern;
   piece.style.height = "100px";
   piece.style.width = "100px";
   board.rows[row].cells[cell].appendChild(piece);

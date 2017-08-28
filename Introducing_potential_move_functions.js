@@ -1,4 +1,6 @@
 
+  
+
 
   function potentialmove(x,y,cellClicked){
     if (cellClicked._data.row == (selectedPiece._data.row + x)){

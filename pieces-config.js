@@ -1,377 +1,83 @@
+
+function rookMovePattern(currentRow, currentColumn, targetRow, targetColumn){
+  if(currentRow == targetRow || currentColumn == targetColumn) return true;
+  else return false;
+}
+
+function bishopMovePattern(currentRow, currentColumn, targetRow, targetColumn){
+  var rowDifferential = Math.abs(currentRow - targetRow);
+  var columnDifferential = Math.abs(currentColumn - targetColumn);
+  if (rowDifferential != 0 && rowDifferential == columnDifferential) return true;
+  else return false;
+}
+
+function queenMovePattern(currentRow, currentColumn, targetRow, targetColumn){
+  var rookCanMoveThere = rookMovePattern(currentRow, currentColumn, targetRow, targetColumn);
+  var bishopCanMoveThere = bishopMovePattern(currentRow, currentColumn, targetRow, targetColumn);
+  if (rookCanMoveThere || bishopCanMoveThere) return true;
+  else return false;
+}
+
+var piecesConfig = {
+  bishop: {
+    img: {
+      white: "whitebishop.png",
+      black: "bishop.png",
+    },
+    pattern: bishopMovePattern
+  }
+};
+/*
+
 var whitePieces = {
   pawn: {
     img: "Whitepawn.png",
-    canMoveTo: function pawnpotential(cellClicked){
-      if(pieceClicked != undefined && selectedPiece != undefined) {
-        potentialmove((-1),(1),pieceClicked);
-        potentialmove((-1),(-1),pieceClicked);
-  //making pieceClicked == cellClicked
-          }
-      else {
-
-
-      // simply moving forward (black pwans move differently thatn white pawns)
-          if(selectedPiece._data.row == 1) {
-            potentialmove((-1),(0),cellClicked);
-            potentialmove((-2),(0),cellClicked);
-          }
-
-          else {
-            potentialmove((-1),(0),cellClicked);
-          }
-
-
-    }
-    }
+    pattern: null  // todo
   },
   horse: {
-    img: "WhiteHorse.png"
-    canMoveTo: function horsepotential(cellClicked){
-      potentialmove((-2),(-1),cellClicked);
-      potentialmove((-2),(1),cellClicked);
-
-      potentialmove((-1),(-2),cellClicked);
-      potentialmove((1),(-2),cellClicked);
-
-      potentialmove((2),(-1),cellClicked);
-      potentialmove((2),(1),cellClicked);
-
-      potentialmove((-1),(2),cellClicked);
-      potentialmove((1),(2),cellClicked);
-    }
+    img: "WhiteHorse.png",
+    pattern: null  // todo
   },
   queen:{
-    img: "whitequeen.png"
-    canMoveTo: function queenpotential(cellClicked){
-      potentialmove((1),(1),cellClicked);
-      potentialmove((2),(2),cellClicked);
-      potentialmove((3),(3),cellClicked);
-      potentialmove((4),(4),cellClicked);
-      potentialmove((5),(5),cellClicked);
-      potentialmove((6),(6),cellClicked);
-      potentialmove((-1),(-1),cellClicked);
-      potentialmove((-2),(-2),cellClicked);
-      potentialmove((-3),(-3),cellClicked);
-      potentialmove((-4),(-4),cellClicked);
-      potentialmove((-5),(-5),cellClicked);
-      potentialmove((-6),(-6),cellClicked);
-
-      potentialmove((-1),(1),cellClicked);
-      potentialmove((-2),(2),cellClicked);
-      potentialmove((-3),(3),cellClicked);
-      potentialmove((-4),(4),cellClicked);
-      potentialmove((-5),(5),cellClicked);
-      potentialmove((-6),(6),cellClicked);
-      potentialmove((1),(-1),cellClicked);
-      potentialmove((2),(-2),cellClicked);
-      potentialmove((3),(-3),cellClicked);
-      potentialmove((4),(-4),cellClicked);
-      potentialmove((5),(-5),cellClicked);
-      potentialmove((6),(-6),cellClicked);
-
-      //rook
-      potentialmove((-1),(0),cellClicked));
-      potentialmove((-2),(0),cellClicked));
-      potentialmove((-3),(0),cellClicked));
-      potentialmove((-4),(0),cellClicked));
-      potentialmove((-5),(0),cellClicked));
-      potentialmove((-6),(0),cellClicked));
-      potentialmove((-7),(0),cellClicked));
-      potentialmove((-8),(0),cellClicked));
-      potentialmove((1),(0),cellClicked));
-      potentialmove((2),(0),cellClicked));
-      potentialmove((3),(0),cellClicked));
-      potentialmove((4),(0),cellClicked));
-      potentialmove((5),(0),cellClicked));
-      potentialmove((6),(0),cellClicked));
-      potentialmove((7),(0),cellClicked));
-      potentialmove((8),(0),cellClicked));
-
-      potentialmove((0),(-1),cellClicked));
-      potentialmove((0),(-2),cellClicked));
-      potentialmove((0),(-3),cellClicked));
-      potentialmove((0),(-4),cellClicked));
-      potentialmove((0),(-5),cellClicked));
-      potentialmove((0),(-6),cellClicked));
-      potentialmove((0),(-7),cellClicked));
-      potentialmove((0),(-8),cellClicked));
-      potentialmove((0),(1),cellClicked));
-      potentialmove((0),(2),cellClicked));
-      potentialmove((0),(3),cellClicked));
-      potentialmove((0),(4),cellClicked));
-      potentialmove((0),(5),cellClicked));
-      potentialmove((0),(6),cellClicked));
-      potentialmove((0),(7),cellClicked));
-      potentialmove((0),(8),cellClicked));
-    }
+    img: "whitequeen.png",
+    pattern: null  // todo
   },
   king:{
-    img: "Whiteking.png"
-    canMoveTo: function kingpotential(cellClicked){
-      potentialmove((-1),(1),pieceClicked);
-      potentialmove((-1),(-1),pieceClicked);
-
-      potentialmove((+1),(1),cellClicked);
-      potentialmove((+1),(-1),cellClicked);
-
-      potentialmove((-1),(0),cellClicked);
-      potentialmove((1),(0),cellClicked);
-    }
+    img: "Whiteking.png",
+    pattern: null  // todo
   },
   bishop:{
-    img: "whitebishop.png"
-    canMoveTo: function bishoppotential(cellClicked){
-      potentialmove((1),(1),cellClicked);
-      potentialmove((2),(2),cellClicked);
-      potentialmove((3),(3),cellClicked);
-      potentialmove((4),(4),cellClicked);
-      potentialmove((5),(5),cellClicked);
-      potentialmove((6),(6),cellClicked);
-      potentialmove((-1),(-1),cellClicked);
-      potentialmove((-2),(-2),cellClicked);
-      potentialmove((-3),(-3),cellClicked);
-      potentialmove((-4),(-4),cellClicked);
-      potentialmove((-5),(-5),cellClicked);
-      potentialmove((-6),(-6),cellClicked);
-
-      potentialmove((-1),(1),cellClicked);
-      potentialmove((-2),(2),cellClicked);
-      potentialmove((-3),(3),cellClicked);
-      potentialmove((-4),(4),cellClicked);
-      potentialmove((-5),(5),cellClicked);
-      potentialmove((-6),(6),cellClicked);
-      potentialmove((1),(-1),cellClicked);
-      potentialmove((2),(-2),cellClicked);
-      potentialmove((3),(-3),cellClicked);
-      potentialmove((4),(-4),cellClicked);
-      potentialmove((5),(-5),cellClicked);
-      potentialmove((6),(-6),cellClicked);
-    }
-
+    img: "whitebishop.png",
+    pattern: null  // todo
   },
   rook:{
-    img: "whiterook.png"
-    canMoveTo: function rookpotential(cellClicked){
-      potentialmove((-1),(0),cellClicked);
-      potentialmove((-2),(0),cellClicked);
-      potentialmove((-3),(0),cellClicked);
-      potentialmove((-4),(0),cellClicked);
-      potentialmove((-5),(0),cellClicked);
-      potentialmove((-6),(0),cellClicked);
-      potentialmove((-7),(0),cellClicked);
-      potentialmove((-8),(0),cellClicked);
-      potentialmove((1),(0),cellClicked);
-      potentialmove((2),(0),cellClicked);
-      potentialmove((3),(0),cellClicked);
-      potentialmove((4),(0),cellClicked);
-      potentialmove((5),(0),cellClicked);
-      potentialmove((6),(0),cellClicked);
-      potentialmove((7),(0),cellClicked);
-      potentialmove((8),(0),cellClicked);
-
-      potentialmove((0),(-1),cellClicked);
-      potentialmove((0),(-2),cellClicked);
-      potentialmove((0),(-3),cellClicked);
-      potentialmove((0),(-4),cellClicked);
-      potentialmove((0),(-5),cellClicked);
-      potentialmove((0),(-6),cellClicked);
-      potentialmove((0),(-7),cellClicked);
-      potentialmove((0),(-8),cellClicked);
-      potentialmove((0),(1),cellClicked);
-      potentialmove((0),(2),cellClicked);
-      potentialmove((0),(3),cellClicked);
-      potentialmove((0),(4),cellClicked);
-      potentialmove((0),(5),cellClicked);
-      potentialmove((0),(6),cellClicked);
-      potentialmove((0),(7),cellClicked);
-      potentialmove((0),(8),cellClicked);
-
-    }
+    img: "whiterook.png",
+    pattern: null  // todo
   }
 }
 
 var blackPieces = {
   pawn: {
-    img: "BlackPawn.png"
-    canMoveTo: function pawnpotential(cellClicked){
-      if(pieceClicked != undefined && selectedPiece != undefined) {
-          potentialmove((+1),(1),cellClicked);
-          potentialmove((+1),(-1),cellClicked);
-           }
-
-      else {
-          if(selectedPiece._data.row == 6) {
-              potentialmove((1),(0),cellClicked);
-              potentialmove((2),(0),cellClicked);
-            }
-          else {
-              potentialmove((1),(0),cellClicked);
-            }
-      }
-    }
-    }
+    img: "BlackPawn.png",
+    pattern: null  // todo
+  },
   horse: {
-    img: "BlackHorse.png"
-    canMoveTo: function horsepotential(cellClicked){
-      potentialmove((-2),(-1),cellClicked);
-      potentialmove((-2),(1),cellClicked);
-
-      potentialmove((-1),(-2),cellClicked);
-      potentialmove((1),(-2),cellClicked);
-
-      potentialmove((2),(-1),cellClicked);
-      potentialmove((2),(1),cellClicked);
-
-      potentialmove((-1),(2),cellClicked);
-      potentialmove((1),(2),cellClicked);
-    }
+    img: "BlackHorse.png",
+    pattern: null  // todo
   },
   queen:{
-    img: "Queen.png"
-    canMoveTo: function queenpotential(cellClicked){
-      potentialmove((1),(1),cellClicked);
-      potentialmove((2),(2),cellClicked);
-      potentialmove((3),(3),cellClicked);
-      potentialmove((4),(4),cellClicked);
-      potentialmove((5),(5),cellClicked);
-      potentialmove((6),(6),cellClicked);
-      potentialmove((-1),(-1),cellClicked);
-      potentialmove((-2),(-2),cellClicked);
-      potentialmove((-3),(-3),cellClicked);
-      potentialmove((-4),(-4),cellClicked);
-      potentialmove((-5),(-5),cellClicked);
-      potentialmove((-6),(-6),cellClicked);
-
-      potentialmove((-1),(1),cellClicked);
-      potentialmove((-2),(2),cellClicked);
-      potentialmove((-3),(3),cellClicked);
-      potentialmove((-4),(4),cellClicked);
-      potentialmove((-5),(5),cellClicked);
-      potentialmove((-6),(6),cellClicked);
-      potentialmove((1),(-1),cellClicked);
-      potentialmove((2),(-2),cellClicked);
-      potentialmove((3),(-3),cellClicked);
-      potentialmove((4),(-4),cellClicked);
-      potentialmove((5),(-5),cellClicked);
-      potentialmove((6),(-6),cellClicked);
-
-      //rook
-      potentialmove((-1),(0),cellClicked));
-      potentialmove((-2),(0),cellClicked));
-      potentialmove((-3),(0),cellClicked));
-      potentialmove((-4),(0),cellClicked));
-      potentialmove((-5),(0),cellClicked));
-      potentialmove((-6),(0),cellClicked));
-      potentialmove((-7),(0),cellClicked));
-      potentialmove((-8),(0),cellClicked));
-      potentialmove((1),(0),cellClicked));
-      potentialmove((2),(0),cellClicked));
-      potentialmove((3),(0),cellClicked));
-      potentialmove((4),(0),cellClicked));
-      potentialmove((5),(0),cellClicked));
-      potentialmove((6),(0),cellClicked));
-      potentialmove((7),(0),cellClicked));
-      potentialmove((8),(0),cellClicked));
-
-      potentialmove((0),(-1),cellClicked));
-      potentialmove((0),(-2),cellClicked));
-      potentialmove((0),(-3),cellClicked));
-      potentialmove((0),(-4),cellClicked));
-      potentialmove((0),(-5),cellClicked));
-      potentialmove((0),(-6),cellClicked));
-      potentialmove((0),(-7),cellClicked));
-      potentialmove((0),(-8),cellClicked));
-      potentialmove((0),(1),cellClicked));
-      potentialmove((0),(2),cellClicked));
-      potentialmove((0),(3),cellClicked));
-      potentialmove((0),(4),cellClicked));
-      potentialmove((0),(5),cellClicked));
-      potentialmove((0),(6),cellClicked));
-      potentialmove((0),(7),cellClicked));
-      potentialmove((0),(8),cellClicked));
-    }
-
+    img: "Queen.png",
+    pattern: null  // todo
   },
   king:{
-    img: "blackking.png"
-    canMoveTo: function kingpotential(cellClicked){
-      potentialmove((-1),(1),pieceClicked);
-      potentialmove((-1),(-1),pieceClicked);
-
-      potentialmove((+1),(1),cellClicked);
-      potentialmove((+1),(-1),cellClicked);
-
-      potentialmove((-1),(0),cellClicked);
-      potentialmove((1),(0),cellClicked);
-    }
+    img: "blackking.png",
+    pattern: null  // todo
   },
   bishop:{
-    img: "bishop.png"
-    canMoveTo: function bishoppotential(cellClicked){
-      potentialmove((1),(1),cellClicked);
-      potentialmove((2),(2),cellClicked);
-      potentialmove((3),(3),cellClicked);
-      potentialmove((4),(4),cellClicked);
-      potentialmove((5),(5),cellClicked);
-      potentialmove((6),(6),cellClicked);
-      potentialmove((-1),(-1),cellClicked);
-      potentialmove((-2),(-2),cellClicked);
-      potentialmove((-3),(-3),cellClicked);
-      potentialmove((-4),(-4),cellClicked);
-      potentialmove((-5),(-5),cellClicked);
-      potentialmove((-6),(-6),cellClicked);
-
-      potentialmove((-1),(1),cellClicked);
-      potentialmove((-2),(2),cellClicked);
-      potentialmove((-3),(3),cellClicked);
-      potentialmove((-4),(4),cellClicked);
-      potentialmove((-5),(5),cellClicked);
-      potentialmove((-6),(6),cellClicked);
-      potentialmove((1),(-1),cellClicked);
-      potentialmove((2),(-2),cellClicked);
-      potentialmove((3),(-3),cellClicked);
-      potentialmove((4),(-4),cellClicked);
-      potentialmove((5),(-5),cellClicked);
-      potentialmove((6),(-6),cellClicked);
-    }
+    img: "bishop.png",
+    pattern: null  // todo
   },
   rook:{
-    img: "BlackRook.png"
-    canMoveTo: function rookpotential(cellClicked){
-      potentialmove((-1),(0),cellClicked);
-      potentialmove((-2),(0),cellClicked);
-      potentialmove((-3),(0),cellClicked);
-      potentialmove((-4),(0),cellClicked);
-      potentialmove((-5),(0),cellClicked);
-      potentialmove((-6),(0),cellClicked);
-      potentialmove((-7),(0),cellClicked);
-      potentialmove((-8),(0),cellClicked);
-      potentialmove((1),(0),cellClicked);
-      potentialmove((2),(0),cellClicked);
-      potentialmove((3),(0),cellClicked);
-      potentialmove((4),(0),cellClicked);
-      potentialmove((5),(0),cellClicked);
-      potentialmove((6),(0),cellClicked);
-      potentialmove((7),(0),cellClicked);
-      potentialmove((8),(0),cellClicked);
-
-      potentialmove((0),(-1),cellClicked);
-      potentialmove((0),(-2),cellClicked);
-      potentialmove((0),(-3),cellClicked);
-      potentialmove((0),(-4),cellClicked);
-      potentialmove((0),(-5),cellClicked);
-      potentialmove((0),(-6),cellClicked);
-      potentialmove((0),(-7),cellClicked);
-      potentialmove((0),(-8),cellClicked);
-      potentialmove((0),(1),cellClicked);
-      potentialmove((0),(2),cellClicked);
-      potentialmove((0),(3),cellClicked);
-      potentialmove((0),(4),cellClicked);
-      potentialmove((0),(5),cellClicked);
-      potentialmove((0),(6),cellClicked);
-      potentialmove((0),(7),cellClicked);
-      potentialmove((0),(8),cellClicked);
-
-    }
-  }
-}
+    img: "BlackRook.png",
+    pattern: null  // todo
+}*/
